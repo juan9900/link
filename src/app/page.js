@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -10,7 +11,10 @@ export default function Home() {
         Here you can create a space for your clients to quickly find all your
         social links!
       </p>
-      <button onClick={() => signIn()}>Start journey</button>
+      <Link className="mr-5 bg-red-600" href={"/signin"}>
+        Login
+      </Link>
+      <Link href={"/signup"}>Register</Link>
     </>
   );
   // return <button onClick={() => signIn()}>Sign In</button>;
