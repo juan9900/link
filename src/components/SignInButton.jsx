@@ -7,6 +7,7 @@ const SignInButton = () => {
   const router = useRouter();
   const [isLogged, setIsLogged] = useState(false);
   const handleLogOut = () => {
+    localStorage.clear();
     signOut(auth)
       .then(() => {
         // Sign-out successful.
