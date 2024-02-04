@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -8,12 +8,15 @@ import Link from "next/link";
 import useErrors from "@/utils/hooks/useErrors";
 import firebaseErrorRename from "@/utils/constants/firebaseErrorRename";
 import { signIn } from "@/utils/lib/auth";
+import ShowPasswordButton from "@/components/ShowPasswordButton";
+import { Button } from "@/components/ui/button";
 
 export default function page() {
   const router = useRouter();
   const { errorMessage, errorCode } = useErrors((state) => state);
   const setErrors = useErrors((state) => state.setErrors);
   const resetErrors = useErrors((state) => state.resetErrors);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     //Clear the local storage data before a new user logs in
@@ -58,14 +61,18 @@ export default function page() {
       });
     }
   };
+
+  const toggleShowPassword = (e) => {
+    setShowPassword((prev) => !prev);
+  };
   return (
     <>
       <form className="" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
-              className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              className="mx-auto h-40 w-auto"
+              src="linkHub-logo-solo.png"
               alt="Your Company"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -104,27 +111,31 @@ export default function page() {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   defaultValue="12345678"
                   {...register("password1", { required: true })}
                 />
+                <ShowPasswordButton
+                  toggleShowPassword={toggleShowPassword}
+                  showPassword={showPassword}
+                />
               </div>
             </div>
 
             <div>
-              <button
+              <Button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-4"
+                className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm mt-4 hover:bg-primaryDarker"
               >
                 Sign in
-              </button>
+              </Button>
             </div>
 
             {errorMessage && (
@@ -137,7 +148,7 @@ export default function page() {
               Not a member?{" "}
               <Link
                 href={"/signup"}
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                className="font-semibold leading-6 text-primary hover:text-primaryDarker "
               >
                 Create your account here
               </Link>

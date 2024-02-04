@@ -20,8 +20,6 @@ export default function page() {
 
   return (
     <>
-      <p>{JSON.stringify(authData)}</p>
-
       <div className="m-5">
         {!isLoading && (
           <h1 className="font-black text-4xl">

@@ -1,24 +1,16 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { createUser } from "@/services/auth";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import {
-  auth,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  updateProfile,
-  setDoc,
-  getDoc,
-  doc,
-  db,
-} from "../../utils/constants/firebase";
+import { auth, onAuthStateChanged } from "../../utils/constants/firebase";
 import { usersCollection } from "@/utils/constants/constants";
 import useErrors from "@/utils/hooks/useErrors";
 import firebaseErrorRename from "@/utils/constants/firebaseErrorRename";
 import Link from "next/link";
 import { addProfileData, createFirestoreUser, signUp } from "@/utils/lib/auth";
+import ShowPasswordButton from "@/components/ShowPasswordButton";
 
 export default function page() {
   const router = useRouter();
@@ -26,6 +18,8 @@ export default function page() {
     (state) => state
   );
 
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   useEffect(() => {
     resetErrors();
     onAuthStateChanged(auth, (user) => {
@@ -76,6 +70,14 @@ export default function page() {
 
       console.log(err.message);
     }
+  };
+
+  const toggleShowPassword1 = (e) => {
+    setShowPassword1((prev) => !prev);
+  };
+
+  const toggleShowPassword2 = (e) => {
+    setShowPassword2((prev) => !prev);
   };
   return (
     <>
@@ -265,11 +267,11 @@ export default function page() {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="password1"
                   name="password1"
-                  type="password"
+                  type={showPassword1 ? "text" : "password"}
                   autoComplete="current-password"
                   required
                   className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
@@ -293,6 +295,10 @@ export default function page() {
                     },
                   })}
                 />
+                <ShowPasswordButton
+                  toggleShowPassword={toggleShowPassword1}
+                  showPassword={showPassword1}
+                />
               </div>
               {errors.password1 && (
                 <p className="text-red-500">{errors.firstName.message}</p>
@@ -308,11 +314,11 @@ export default function page() {
                   Confirm password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="password2"
                   name="password2"
-                  type="password"
+                  type={showPassword2 ? "text" : "password"}
                   autoComplete="current-password"
                   required
                   className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
@@ -330,6 +336,10 @@ export default function page() {
                         "The passwords do not match",
                     },
                   })}
+                />
+                <ShowPasswordButton
+                  toggleShowPassword={toggleShowPassword2}
+                  showPassword={showPassword2}
                 />
               </div>
               {errors.password2 && (
@@ -355,7 +365,7 @@ export default function page() {
             <p className="mt-10 text-center text-sm text-gray-500">
               Already have an account?{" "}
               <Link
-                href={"/signup"}
+                href={"/signin"}
                 className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
               >
                 Log in here
