@@ -12,11 +12,15 @@ export default function PhonePreview({ userLinks }) {
                 <FaUser className="text-2xl" />
               </div>
               <div className="w-4/6 mt-10">
-                {userLinks.map((link) => (
-                  <div className="bg-gray-100 px-2 py-1 my-2 rounded-full w-full">
-                    <p className="text-gray-800">{link.social}</p>
-                  </div>
-                ))}
+                {userLinks &&
+                  userLinks.map((link) => (
+                    <div
+                      key={link.link}
+                      className="bg-gray-100 px-2 py-1 my-2 rounded-full w-full"
+                    >
+                      <p className="text-gray-800">{link.social}</p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>

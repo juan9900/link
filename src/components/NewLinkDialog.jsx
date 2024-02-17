@@ -26,7 +26,7 @@ export function NewLinkDialog({ uid }) {
   const onSubmit = async (data) => {
     console.log("triggered");
     try {
-      const res = createNewLink(uid);
+      const res = createNewLink(uid, watch("linkName"), watch("linkUrl"));
     } catch (e) {
       console.log(e.message);
     }
@@ -54,13 +54,47 @@ export function NewLinkDialog({ uid }) {
               <Label htmlFor="name" className="text-right">
                 Title
               </Label>
-              <Input id="name" value="Pedro Duarte" className="col-span-3" />
+              <Input
+                id="name"
+                className="col-span-3"
+                {...register("linkName", {
+                  required: {
+                    value: true,
+                    message: "The new link name is required",
+                  },
+                  minLength: {
+                    value: 1,
+                    message: "The username cannot be blank",
+                  },
+                  maxLength: {
+                    value: 15,
+                    message: "The username is too long",
+                  },
+                })}
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
                 URL
               </Label>
-              <Input id="username" value="@peduarte" className="col-span-3" />
+              <Input
+                id="username"
+                className="col-span-3"
+                {...register("linkUrl", {
+                  required: {
+                    value: true,
+                    message: "The new link url is required",
+                  },
+                  minLength: {
+                    value: 1,
+                    message: "The username cannot be blank",
+                  },
+                  maxLength: {
+                    value: 25,
+                    message: "The username is too long",
+                  },
+                })}
+              />
             </div>
           </div>
           <DialogFooter>

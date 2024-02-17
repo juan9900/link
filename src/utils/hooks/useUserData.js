@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { db, doc, collection, getDoc, getDocs } from "../constants/firebase";
 import { linksCollection, usersCollection } from "../constants/constants";
+import { onSnapshot } from "firebase/firestore";
 export function useUserData(uid) {
   const [userData, setUserData] = useState({
     user: null,
@@ -29,18 +30,23 @@ export function useUserData(uid) {
         }
         // Fetch links data from the 'links' subcollection
         const linksCollectionRef = collection(docRef, linksCollection);
-        const linksQuerySnapshot = await getDocs(linksCollectionRef);
-
-        const linksDataArray = [];
-        linksQuerySnapshot.forEach((doc) => {
-          linksDataArray.push(doc.data());
+        onSnapshot(linksCollectionRef, (snapshot) => {
+          const linksDataArray = [];
+          snapshot.forEach((doc) => {
+            linksDataArray.push(doc.data());
+          });
+          console.log("Links Data:", linksDataArray);
+          setUserData((prevData) => ({
+            ...prevData,
+          }));
+          setUserLinks(linksDataArray);
         });
+        // const linksQuerySnapshot = await getDocs(linksCollectionRef);
 
-        console.log("Links Data:", linksDataArray);
-        setUserData((prevData) => ({
-          ...prevData,
-        }));
-        setUserLinks(linksDataArray);
+        // const linksDataArray = [];
+        // linksQuerySnapshot.forEach((doc) => {
+        //   linksDataArray.push(doc.data());
+        // });
 
         setIsLoadingUserData(false);
       }
