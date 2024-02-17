@@ -1,15 +1,17 @@
 "use client";
-import LinksList from "@/components/LinksList";
+import { useContext, useEffect } from "react";
+
 import Spinner from "@/components/Spinner";
 import { AuthContext } from "@/providers/authProvider";
 import { useFirebaseAuthState } from "@/utils/hooks/useFirebaseAuthState";
 import { useUserData } from "@/utils/hooks/useUserData";
-import { useSession } from "next-auth/react";
-import { useContext, useEffect } from "react";
+
+import PhonePreview from "@/components/PhonePreview";
+import LinksListContainer from "@/components/LinksListContainer";
 
 export default function page() {
   const { userAuthData, isLoading } = useFirebaseAuthState();
-  const { userData, isLoadingUserData } = useUserData(
+  const { userData, isLoadingUserData, userLinks, setUserLinks } = useUserData(
     userAuthData?.uid || null
   );
   const authData = useContext(AuthContext);
@@ -32,7 +34,13 @@ export default function page() {
             <Spinner />
           </>
         ) : (
-          <LinksList linksList={userData.links} />
+          <div className="flex flex-row justify-between items-start mt-14 min-h-full">
+            <LinksListContainer
+              userLinks={userLinks}
+              setUserLinks={setUserLinks}
+            />
+            <PhonePreview userLinks={userLinks} />
+          </div>
         )}
       </div>
     </>

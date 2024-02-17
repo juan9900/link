@@ -32,11 +32,11 @@ export default function layout({ children }) {
   //   return <Spinner />;
   // }
   return (
-    <>
+    <div className="min-h-full">
       <AuthProvider>
         <Appbar />
         {children}
       </AuthProvider>
-    </>
+    </div>
   );
 }

@@ -4,8 +4,9 @@ import { linksCollection, usersCollection } from "../constants/constants";
 export function useUserData(uid) {
   const [userData, setUserData] = useState({
     user: null,
-    links: [],
   });
+
+  const [userLinks, setUserLinks] = useState(null);
   const [isLoadingUserData, setIsLoadingUserData] = useState(true);
 
   useEffect(() => {
@@ -38,8 +39,8 @@ export function useUserData(uid) {
         console.log("Links Data:", linksDataArray);
         setUserData((prevData) => ({
           ...prevData,
-          links: linksDataArray,
         }));
+        setUserLinks(linksDataArray);
 
         setIsLoadingUserData(false);
       }
@@ -47,5 +48,5 @@ export function useUserData(uid) {
     searchLinks();
   }, [uid]);
 
-  return { userData, isLoadingUserData };
+  return { userData, isLoadingUserData, userLinks, setUserLinks };
 }

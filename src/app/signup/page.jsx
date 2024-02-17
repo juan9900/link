@@ -9,7 +9,7 @@ import { usersCollection } from "@/utils/constants/constants";
 import useErrors from "@/utils/hooks/useErrors";
 import firebaseErrorRename from "@/utils/constants/firebaseErrorRename";
 import Link from "next/link";
-import { addProfileData, createFirestoreUser, signUp } from "@/utils/lib/auth";
+import { addProfileData, createFirestoreUser, signUp } from "@/lib/auth";
 import ShowPasswordButton from "@/components/ShowPasswordButton";
 
 export default function page() {
@@ -85,8 +85,8 @@ export default function page() {
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
-              className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              className="mx-auto h-24 w-auto"
+              src="linkHub-logo-solo.png"
               alt="Your Company"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -109,11 +109,10 @@ export default function page() {
                   type="text"
                   autoComplete="given-name"
                   required
-                  className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                    errors.firstName && "border-red-500 focus:outline-red-500"
+                  className={`block bg-white w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm  mb-2  sm:leading-6 ${
+                    errors.firstName && "ring-red-500 focus:outline-red-500"
                   }`}
                   placeholder="John"
-                  defaultValue="John"
                   {...register("firstName", {
                     minLength: {
                       value: 1,
@@ -129,7 +128,7 @@ export default function page() {
                 />
               </div>
               {errors.firstName && (
-                <p className="text-red-500">{errors.firstName.message}</p>
+                <p className="text-red-500 mb-2">{errors.firstName.message}</p>
               )}
             </div>
 
@@ -147,11 +146,10 @@ export default function page() {
                   type="text"
                   autoComplete="family-name"
                   required
-                  className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                    errors.lastName && "border-red-500 focus:outline-red-500"
+                  className={`block bg-white w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm  mb-2  sm:leading-6 ${
+                    errors.lastName && "ring-red-500 focus:outline-red-500"
                   }`}
                   placeholder="Doe"
-                  defaultValue="Doe"
                   {...register("lastName", {
                     minLength: {
                       value: 1,
@@ -173,7 +171,7 @@ export default function page() {
                 />
               </div>
               {errors.lastName && (
-                <p className="text-red-500">{errors.lastName.message}</p>
+                <p className="text-red-500 mb-2">{errors.lastName.message}</p>
               )}
             </div>
 
@@ -190,11 +188,10 @@ export default function page() {
                   name="username"
                   type="username"
                   required
-                  className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                    errors.username && "border-red-500 focus:outline-red-500"
+                  className={`block bg-white w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm  mb-2  sm:leading-6 ${
+                    errors.username && "ring-red-500 focus:outline-red-500"
                   }`}
                   placeholder="Johndoe63"
-                  defaultValue="Johndoe63"
                   {...register("username", {
                     required: {
                       value: true,
@@ -217,7 +214,7 @@ export default function page() {
                 />
               </div>
               {errors.username && (
-                <p className="text-red-500">{errors.username.message}</p>
+                <p className="text-red-500 mb-2">{errors.username.message}</p>
               )}
             </div>
 
@@ -235,11 +232,10 @@ export default function page() {
                   type="email"
                   autoComplete="email"
                   required
-                  className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  ${
-                    errors.email && "border-red-500 focus:outline-red-500"
+                  className={`block bg-white w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm  mb-2  sm:leading-6  ${
+                    errors.email && "ring-red-500 focus:outline-red-500"
                   }`}
                   placeholder="Johndoe@gmail.com"
-                  defaultValue="Johndoe@gmail.com"
                   {...register("email", {
                     required: { value: true, message: "The email is required" },
                     minLength: {
@@ -255,7 +251,7 @@ export default function page() {
                 />
               </div>
               {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
+                <p className="text-red-500 mb-2">{errors.email.message}</p>
               )}
             </div>
             <div className="mb-2">
@@ -274,10 +270,9 @@ export default function page() {
                   type={showPassword1 ? "text" : "password"}
                   autoComplete="current-password"
                   required
-                  className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                    errors.password1 && "border-red-500 focus:outline-red-500"
+                  className={`block bg-white w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm  mb-2  sm:leading-6  ${
+                    errors.password1 && "ring-red-500 focus:outline-red-500"
                   }`}
-                  defaultValue="12345678"
                   {...register("password1", {
                     required: {
                       value: true,
@@ -301,7 +296,7 @@ export default function page() {
                 />
               </div>
               {errors.password1 && (
-                <p className="text-red-500">{errors.firstName.message}</p>
+                <p className="text-red-500 mb-2">{errors.firstName.message}</p>
               )}
             </div>
 
@@ -321,10 +316,9 @@ export default function page() {
                   type={showPassword2 ? "text" : "password"}
                   autoComplete="current-password"
                   required
-                  className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                    errors.password2 && "border-red-500 focus:outline-red-500"
+                  className={`block bg-white w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm  mb-2  sm:leading-6  ${
+                    errors.password2 && "ring-red-500 focus:outline-red-500"
                   }`}
-                  defaultValue="12345678"
                   {...register("password2", {
                     required: {
                       value: true,
@@ -343,14 +337,14 @@ export default function page() {
                 />
               </div>
               {errors.password2 && (
-                <p className="text-red-500">{errors.password2.message}</p>
+                <p className="text-red-500 mb-2">{errors.password2.message}</p>
               )}
             </div>
 
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-4"
+                className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm mt-4 hover:bg-primaryDarker"
               >
                 Sign in
               </button>
@@ -366,7 +360,7 @@ export default function page() {
               Already have an account?{" "}
               <Link
                 href={"/signin"}
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                className="font-semibold leading-6 text-primary hover:text-primaryDarker "
               >
                 Log in here
               </Link>

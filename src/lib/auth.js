@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "@/utils/constants/firebase";
-import { usersCollection } from "../constants/constants";
+import { usersCollection } from "../utils/constants/constants";
 
 export async function signIn(email, password) {
   return signInWithEmailAndPassword(auth, email, password);

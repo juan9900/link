@@ -7,7 +7,7 @@ import { auth, onAuthStateChanged } from "../../utils/constants/firebase";
 import Link from "next/link";
 import useErrors from "@/utils/hooks/useErrors";
 import firebaseErrorRename from "@/utils/constants/firebaseErrorRename";
-import { signIn } from "@/utils/lib/auth";
+import { signIn } from "@/lib/auth";
 import ShowPasswordButton from "@/components/ShowPasswordButton";
 import { Button } from "@/components/ui/button";
 
@@ -71,7 +71,7 @@ export default function page() {
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
-              className="mx-auto h-40 w-auto"
+              className="mx-auto h-24 w-auto"
               src="linkHub-logo-solo.png"
               alt="Your Company"
             />
@@ -95,7 +95,7 @@ export default function page() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-4"
+                  className="block bg-white w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6 mb-4"
                   defaultValue="juanluislauretta@gmail.com"
                   {...register("email")}
                 />
@@ -118,7 +118,7 @@ export default function page() {
                   type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="bg-white block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
                   defaultValue="12345678"
                   {...register("password1", { required: true })}
                 />
