@@ -36,6 +36,9 @@ export default function LinksListContainer({ userLinks, setUserLinks }) {
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
+    console.log(
+      `active: ${JSON.stringify(active.id)} / over: ${JSON.stringify(over.id)}`
+    );
     let newOrder = [];
     if (active.id !== over.id) {
       setUserLinks((items) => {

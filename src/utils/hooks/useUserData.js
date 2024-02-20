@@ -13,42 +13,49 @@ export function useUserData(uid) {
   useEffect(() => {
     const searchLinks = async () => {
       if (uid) {
+        // const docRef = doc(db, usersCollection, uid);
+        // const docSnap = await getDoc(docRef);
+        // if (docSnap.exists()) {
+        //   console.log("Document data:", docSnap.data());
+        //   setUserData((prevData) => ({
+        //     ...prevData,
+        //     ...docSnap.data(),
+        //   }));
+
+        //   setUserLinks(docSnap.data().links);
+        // } else {
+        //   console.log("No such document!");
+        //   setUserData((prevData) => ({
+        //     ...prevData,
+        //     user: null,
+        //   }));
+        // }
+
+        // setIsLoadingUserData(false);
+
         const docRef = doc(db, usersCollection, uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-          setUserData((prevData) => ({
-            ...prevData,
-            user: docSnap.data(),
-          }));
-        } else {
-          console.log("No such document!");
-          setUserData((prevData) => ({
-            ...prevData,
-            user: null,
-          }));
-        }
-        // Fetch links data from the 'links' subcollection
-        const linksCollectionRef = collection(docRef, linksCollection);
-        onSnapshot(linksCollectionRef, (snapshot) => {
-          const linksDataArray = [];
-          snapshot.forEach((doc) => {
-            linksDataArray.push(doc.data());
-          });
-          console.log("Links Data:", linksDataArray);
-          setUserData((prevData) => ({
-            ...prevData,
-          }));
-          setUserLinks(linksDataArray);
+
+        const unsubscribe = onSnapshot(docRef, (docSnap) => {
+          if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+            setUserData((prevData) => ({
+              ...prevData,
+              ...docSnap.data(),
+            }));
+
+            setUserLinks(docSnap.data().links);
+          } else {
+            console.log("No such document!");
+            setUserData((prevData) => ({
+              ...prevData,
+              user: null,
+            }));
+          }
+
+          setIsLoadingUserData(false);
         });
-        // const linksQuerySnapshot = await getDocs(linksCollectionRef);
 
-        // const linksDataArray = [];
-        // linksQuerySnapshot.forEach((doc) => {
-        //   linksDataArray.push(doc.data());
-        // });
-
-        setIsLoadingUserData(false);
+        return () => unsubscribe();
       }
     };
     searchLinks();

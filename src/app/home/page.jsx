@@ -35,6 +35,7 @@ export default function page() {
           </>
         ) : (
           <div className="flex flex-row justify-between items-start mt-14 min-h-full">
+            {/* {JSON.stringify(userData)} */}
             <LinksListContainer
               userLinks={userLinks}
               setUserLinks={setUserLinks}
